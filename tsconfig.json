@@ -7,7 +7,7 @@
             "esnext",
         ],
         "esModuleInterop": true,
-        "module": "ESNext",
+        "module": "esnext",
         "moduleResolution": "node",
         "jsx": "react",
         "rootDir": "src",
