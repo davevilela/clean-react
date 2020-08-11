@@ -4,7 +4,7 @@ import { AccountModel } from '../models/account-model'
   Type alias recebido pela autenticação.
 */
 
-type AuthenticationParams = {
+export type AuthenticationParams = {
   email: string
   password: string
 }
