@@ -16,7 +16,7 @@ export class RemoteAuthentication {
     /*
       chamar o client em questão com o parâmetro recebido
     */
-    await this.httpPostClient.post(this.url)
+    await this.httpPostClient.post({ url: this.url })
     return Promise.resolve()
   }
 }
