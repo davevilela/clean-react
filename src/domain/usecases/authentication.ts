@@ -1,4 +1,4 @@
-import { AccountModel } from '@/domain/models/account-model'
+import { AccountModel } from '@/domain/models'
 
 /*
   Type alias recebido pela autenticação.
