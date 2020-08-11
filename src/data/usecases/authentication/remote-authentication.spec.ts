@@ -5,32 +5,39 @@
   --interface segregation principle--
 */
 
-import { HttpPostClient } from '../../protocols/http/http-post-client'
 import { RemoteAuthentication } from './remote-authentication'
+import { HttpPostClientSpy } from '../../test/mock-http-client'
 
-describe('RemoteAuthentication', () => {
-  test('Should call HttpPostClient with correct URL', async () => {
-    /*
+type SutTypes = {
+  sut: RemoteAuthentication
+  httpPostClientSpy: HttpPostClientSpy
+}
+
+const makeSut = (url: string = 'any_url'): SutTypes => {
+  /*
       Deve ser criada uma classe spy, para
       mockar uma dependencia do SUT
     */
-    class HttpPostClientSpy implements HttpPostClient {
-      url?: string
-      async post (url: string): Promise<void> {
-        this.url = url
-        return Promise.resolve()
-      }
-    }
+  const httpPostClientSpy = new HttpPostClientSpy()
 
-    /*
-    A url tem que ser injetada no construtor,
-    pois é específico apenas para a autenticação HTTP.
-    */
+  /*
+   A url tem que ser injetada no construtor,
+   pois é específico apenas para a autenticação HTTP.
+   */
+  const sut = new RemoteAuthentication(url, httpPostClientSpy)
 
-    const url = 'any_url'
-    const httpClient = new HttpPostClientSpy()
-    const sut = new RemoteAuthentication(url, httpClient)
+  return {
+    sut,
+    httpPostClientSpy
+  }
+}
+
+describe('RemoteAuthentication', () => {
+  test('Should call HttpPostClient with correct URL', async () => {
+    const url = 'other_url'
+    const { sut, httpPostClientSpy } = makeSut(url)
+
     await sut.auth()
-    expect(httpClient.url).toBe(url)
+    expect(httpPostClientSpy.url).toBe(url)
   })
 })
